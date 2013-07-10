@@ -1,14 +1,10 @@
-#include <wiringPi.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include "lcd.h"
+#include "ITEADTFT.h"
 #include "SFont.h"
 
-extern void Pant(unsigned int color);
-extern void SetPinNU(short P0,short P1,short P2,short P3,short P4,short P5,short P6,short P7,
-			short Prs,short Pcs,short Pwr,short Prst,short Pdout,short Pirq,short Pdin,short Pclk);
 int main (void)
 {
 	
@@ -18,22 +14,18 @@ int main (void)
 	int r;
 	int i;
   	wiringPiSetup();									//设置树莓派GPIO
-  	SetPinNU(0,1,2,3,4,5,6,7,8,10,9,11,15,16,14,12);	//设置引脚（参考树莓派GPIO映射图）
+  	SetPinNU(0,1,2,3,4,5,6,7,8,10,9,11,15,16,14,12,13);	//设置引脚（参考树莓派GPIO映射图）
 	SetLCDSize(LCD_28);									//设置使用的LCD尺寸	
-	LCDInit();											//初始化LCD	
   	Touch_Init();										//初始化触摸
-	setFont(8,12,32);									//设置字体为8x12
+	setFont(8,12);										//设置字体为8x12
   	setColor(0x07e0);									//设置字体颜色
   	setBackColor(0xf800);								//设置背景颜色	
-
 	printf("Init is ok!\n");
 	
  while(1) 
  {
    	clrScr();
-//	printNumI(1000000000,10,40,10,0);
-//	printNumF(5.8964,4,20,60,'.',6,' ');
-//  delay(5000);
+
    setColorRGB(255, 0, 0);
    fillRect(0, 0, 319, 13);
    setColorRGB(64, 64, 64);
@@ -48,6 +40,7 @@ int main (void)
    setColorRGB(0, 0, 255);
    drawRect(0, 14,319,225);
 
+// Draw crosshairs
    setColorRGB(0, 0, 255);
    setBackColorRGB(0, 0, 0);
    drawLine(159, 15, 159, 224);
@@ -57,6 +50,7 @@ int main (void)
   for (i=19; i<220; i+=10)
      drawLine(157, i, 161, i);
 
+// Draw sin-, cos- and tan-lines  
    setColorRGB(0,255,255);
    print("Sin", 5, 15,0);
   for (i=1; i<318; i++)
@@ -87,6 +81,7 @@ int main (void)
    drawLine(159, 15, 159, 224);
    drawLine(1, 119, 318, 119);
 
+// Draw a moving sinewave
   x=1;
   for (i=1; i<(318*20); i++) 
   {
@@ -112,6 +107,7 @@ int main (void)
    setColorRGB(0,0,0);
    fillRect(1,15,318,224);
 
+// Draw some filled rectangles
   for (i=1; i<6; i++)
   {
     switch (i)
@@ -140,6 +136,7 @@ int main (void)
    setColorRGB(0,0,0);
    fillRect(1,15,318,224);
 
+// Draw some filled, rounded rectangles
   for (i=1; i<6; i++)
   {
     switch (i)
@@ -168,6 +165,7 @@ int main (void)
    setColorRGB(0,0,0);
    fillRect(1,15,318,224);
 
+// Draw some filled circles
   for (i=1; i<6; i++)
   {
     switch (i)
@@ -238,16 +236,15 @@ int main (void)
    setBackColorRGB(0, 0, 255);
    print("Runtime: (msecs)", CENTER, 210,0);
    printNumI(millis(), CENTER, 225,0,0);
-
-//  delay (10000);
-    delay (5000);
-	if(Touch_DataAvailable)
-	{
+   
+   delay (2000);
+   if(Touch_DataAvailable())
+   {
 		Touch_Read();
 		x=Touch_GetX();
 		y=Touch_GetY();
 		printf("%d,%d\n",x,y);
-	}
+   }
   }
 
 }
