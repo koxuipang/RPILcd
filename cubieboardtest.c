@@ -9,6 +9,12 @@
 #define LCD_24		24
 #define LCD_28		28
 
+short						D0,D1,D2,D3,D4,D5,D6,D7,RS,CS,WR,RST,T_DOUT,T_IRQ,T_DIN,T_CLK,T_CS;
+int 						TP_X,TP_Y,fch,fcl,bch,bcl,orient,gLCDSize,SDA1,SCL1;
+unsigned short int 			x_Size,y_Size,offset;
+unsigned long int 			disp_x_size,disp_y_size;
+unsigned int 				gTime;
+
 void SetPinNU(short P0,short P1,short P2,short P3,short P4,short P5,short P6,short P7,
 			  short Prs,short Pcs,short Pwr,short Prst,short Pdout,short Pirq,short Pdin,short Pclk,short Ptcs)
 {
