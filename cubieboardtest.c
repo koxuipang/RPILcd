@@ -18,6 +18,16 @@ unsigned short int 			x_Size,y_Size,offset;
 unsigned long int 			disp_x_size,disp_y_size;
 unsigned int 				gTime;
 
+void delayP(int a);
+void WriteCommandData(unsigned int cmd,unsigned int dat);
+void WriteCommand(unsigned int c);
+void WriteData(unsigned int c);
+void SetPinNU(short P0,short P1,short P2,short P3,short P4,short P5,short P6,short P7,
+			  short Prs,short Pcs,short Pwr,short Prst,short Pdout,short Pirq,short Pdin,short Pclk,short Ptcs);
+void SetLCDSize(int a);
+void SetXY(unsigned int x0,unsigned int y0,unsigned int x1,unsigned int y1);
+void fillScr(unsigned int color);
+
 void delayP(int a)
 {
 	int i;
