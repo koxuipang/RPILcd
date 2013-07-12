@@ -361,7 +361,8 @@ void SetLCDSize(int a)
 	
 	int i,R,G,B;
 	gLCDSize = a;
-	gTime = 40;
+	//gTime = 40;
+	gTime = 0;
 	orient=LANDSCAPE;
 	
 	switch(gLCDSize)
